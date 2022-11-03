@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-u&l%m1t*$wlmya-4)7#%x@t=7-_&zpf%)#(l(_l!dew((3^b@@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.104','127.0.0.1']
+ALLOWED_HOSTS = ['192.168.0.104','127.0.0.1','f677-102-66-234-112.eu.ngrok.io']
 
 
 # Application definition
@@ -129,3 +129,4 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_REDIRECT_URL = '/'
+CSRF_TRUSTED_ORIGINS = ['https://f677-102-66-234-112.eu.ngrok.io ','http://*.127.0.0.1']

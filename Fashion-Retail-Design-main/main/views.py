@@ -39,7 +39,7 @@ def login(response):
         form = CustomAuthForm(response.POST)
         if form.is_valid():
             user = form.save()
-            login(response.user)
+            login(response,user)
             messages.success(response,f'{user.first_name} has logged in!')
             return redirect('/home')
     else:
