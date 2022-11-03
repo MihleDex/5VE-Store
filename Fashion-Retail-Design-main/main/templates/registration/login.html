@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<style>
+
+.container {
+    margin-bottom: 25%;
+}
+
+@media screen and (max-width: 976px) {
+    .container {
+        margin-bottom: 55%;
+    }
+  }
+
+#footer {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+}
+    
+</style>
+
+<div class="container mt-5">
+    <div class="col-sm-2 col-md-10 mt-5" style="margin:0px auto;">
+        <div class="card rounded-5 mt-3  border-0 bg-company-brown w-100 h-100" style="margin:0px auto;">
+            <div class="card-body  text-center rounded p-3" >
+            <h5 class="card-title text-center text-dark" style="">Login with your details</h5>
+            
+            <div class="col-sm-4 col-md-15" style="margin:0px auto;">
+                <form  class="w-80" method="post" >
+                    {% csrf_token %}
+                        {{form|crispy}}
+                        <p class="text-dark" style="padding-left:0px;">Don't have an account? <a href="/sign-up">Create one.</a></p>
+                        <button type="submit" class="btn btn-dark rounded-5" style="margin:0px auto;border-radius:15px;">login</button>
+                </form>
+            </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

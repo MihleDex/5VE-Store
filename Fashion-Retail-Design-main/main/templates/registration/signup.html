@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+<style type="text/css">
+    
+    @media screen and (max-width: 976px) {
+        .card{
+            padding-top:5%;
+        }
+      }
+      
+      div_id_first_name{
+          width:100px;
+      }
+
+      .formwidth: {
+        {
+          width: 75%;
+        }
+
+   
+    
+</style>
+
+
+{% block content %}
+
+<div class="col-sm-2 col-md-10 mt-5 mb-5" style="margin:0px auto;">
+    <div class="card rounded mt-3 border-0 mb-5 mt-5 bg-company-brown opacity-100 w-100" style="margin:0px auto;">
+        <div class="card-body text-center bg-company-brown rounded p-3 opacity-100" >
+            <h5 class="card-title text-center " style="" >Register with your details</h5>
+            <div id="login" class="container-fluid align-items-center justify-content-between p-5 opacity-100"
+            style="margin-left:auto;margin-right:auto;">
+            <div class="col-sm-4 col-md-15" style="margin:0px auto;">
+            <form id="formy" class="w-100" method="post" >
+                    {% csrf_token %}
+                    {{ form |crispy}}
+                <p>Do you have an account?<a href="/login"> Login </a></p>
+                <button type="submit" class="btn btn-dark border-0 opacity-100" style="border-radius: 15px;">register</button>
+            </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

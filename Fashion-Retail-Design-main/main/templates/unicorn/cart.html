@@ -1,0 +1,174 @@
+{% load unicorn %}
+<div>
+    <!-- put component code here -->
+    <div class="container shadow rounded-5 mt-5" style="border-radius: 20px;">
+        <div class="row text-center g-4 pt-5">
+            <h2 style="margin:0px auto;">On Sale 💰</h2>
+            <div id="Items" class="cards">
+                {% for item in items %}
+                    <div class="card shadow m-3 mb-3 rounded-5" style="border-radius: 20px;">
+                        <img
+                            src="{{ item.item_image }}"
+                            class="card-img-top shadow"
+                            style="border-radius: 20px;"
+                            alt="...">
+                        <div class="card-body rounded-5">
+                            <p class="card-text">
+                                {{ item.item_name }}
+                                R{{ item.item_price }}</p>
+                            {% csrf_token %}
+                            <button class="btn btn-outline-dark" unicorn:click="add_item({{item.pk}})">Add to Cart</button>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div
+        class="modal fade"
+        id="LoginModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        style="border-radius: 20px;">
+        <div class="modal-dialog modal-xl" style="border-radius: 20px;">
+            <div class="modal-content bg-btn-dark" style="border-radius: 20px;">
+                <div class="modal-header text-center">
+                    <h5 class="modal-title w-100" id="exampleModalLabel">Cart
+                    </h5>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <section class="h-100">
+                        <div class="container ">
+                            <div class="row d-flex justify-content-center my-4">
+                                <div class="col-md-8">
+                                    <div class="card mb-4  bg-btn-dark">
+                                        <div class="card-body">
+                                            <!-- Single item -->
+
+                                            {% if user_items %}
+                                                {% for item in user_items %}
+                                                    <div class="row mt-2">
+                                                        <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
+                                                            <!-- Image -->
+                                                            <div
+                                                                class="bg-image hover-overlay hover-zoom ripple rounded"
+                                                                data-mdb-ripple-color="light">
+                                                                <img src="{{item.product.item_image}}" class="w-100" alt="Blue Jeans Jacket"/>
+                                                            </div>
+                                                            <!-- Image -->
+                                                        </div>
+
+                                                        <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
+                                                            <!-- Data -->
+                                                            <p>
+                                                                <strong>{{item.quantity}}x{{ item }}</strong>
+                                                            </p>
+                                                            <p>Color: blue</p>
+                                                            <p>Size: M</p>
+                                                            {% csrf_token %}
+                                                            <button class="btn btn-dark" unicorn:click="delete_item({{item.pk}})">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+
+                                                            <!-- Data -->
+                                                        </div>
+
+                                                        <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+                                                            <!-- Quantity -->
+                                                            <div class="d-flex mb-4" style="max-width: 300px"></div>
+                                                            <!-- Quantity -->
+
+                                                            <!-- Price -->
+                                                            <p class="text-start text-md-center">
+                                                                <strong>R{{ item.total_price }}</strong>
+                                                            </p>
+                                                            <!-- Price -->
+                                                        </div>
+                                                    </div>
+
+                                                {% endfor %}
+                                            {% else %}
+                                                There are no products in your cart.
+                                            {% endif %}
+
+                                            <!-- Single item -->
+
+                                            <hr class="my-4"/>
+
+                                        </div>
+                                    </div>
+                                    <div class="card exp-card mb-4 bg-btn-dark">
+                                        <div class="card-body">
+                                            <p>
+                                                <strong>Expected shipping delivery</strong>
+                                            </p>
+                                            <p class="mb-0">12.10.2020 - 14.10.2020</p>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-4 mb-lg-0 bg-btn-dark">
+                                        <div class="card-body">
+                                            <p>
+                                                <strong>We accept</strong>
+                                                <i class="fa fa-paypal"></i>
+                                                <i class="fa fa-cc-mastercard"></i>
+                                                <i class="fa fa-cc-visa"></i> |
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card sum-card mb-4 bg-btn-dark">
+                                        <div class="card-header py-3">
+                                            <h5 class="mb-0"><strong>Summary</strong></h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush bg-btn-dark">
+                                                <li
+                                                    class="list-group-item d-flex bg-btn-dark justify-content-between align-items-center border-0 px-0 pb-0">
+                                                    <strong>Products</strong>
+                                                    <span><strong>R{{ item_total }}</strong></span>
+                                                </li>
+                                                <li
+                                                    class="list-group-item d-flex bg-btn-dark justify-content-between align-items-center px-0">
+                                                   <strong> Shipping </strong>
+                                                    <span><strong>R{{ shipping }}</strong></span>
+                                                </li>
+                                                <li
+                                                    class="list-group-item d-flex  bg-btn-dark justify-content-between align-items-center border-0 px-0 mb-3">
+                                                    <div>
+                                                        <strong>Total Price</strong>
+                                                        <strong>
+                                                            <p class="mb-0">(including VAT)</p>
+                                                        </strong>
+                                                    </div>
+                                                    <span>
+                                                        <strong>R{{ total }}</strong>
+                                                    </span>
+                                                </li>
+                                            </ul>
+
+                                            <button type="button" class="btn btn-dark text-light b-0 r-5 btn-lg btn-block">
+                                                Go to checkout
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
