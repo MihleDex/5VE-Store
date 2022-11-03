@@ -16,7 +16,7 @@ class CartView(UnicornView):
         self.user_pk = kwargs.get('user')
         self.user_items = UserItem.objects.filter(user=self.user_pk)
         self.get_total()
-        self.get_item_total()
+    
 
     def add_item(self,item_pk):
         item, created = UserItem.objects.get_or_create(
@@ -28,7 +28,6 @@ class CartView(UnicornView):
             item.save()
         self.user_items = UserItem.objects.filter(user=self.user_pk)
         self.get_total()
-        self.get_item_total()
         return redirect('/')
 
 
@@ -36,16 +35,15 @@ class CartView(UnicornView):
         self.total = sum(
             product.total_price for product in self.user_items
         )
+        self.total = self.total + self.shipping
+        self.item_total = self.total - self.shipping
 
     def delete_item(self, item_pk):
         item = UserItem.objects.filter(pk=item_pk)
         item.delete()
         self.user_items = self.user_items.exclude(pk=item_pk)
         self.get_total()
-        self.get_item_total()
         return redirect('/')
 
-    def get_item_total(self):
-        self.item_total = self.total - self.shipping
 
         
