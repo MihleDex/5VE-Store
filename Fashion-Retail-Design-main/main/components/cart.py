@@ -3,6 +3,9 @@ from django_unicorn.components import UnicornView, QuerySetType
 from django.contrib.auth.models import User
 from django.db.models import F
 from main.models import UserItem 
+from django.contrib import messages
+
+
 
 class CartView(UnicornView):
     user_items: QuerySetType[UserItem] = None
@@ -17,7 +20,7 @@ class CartView(UnicornView):
         self.user_items = UserItem.objects.filter(user=self.user_pk)
         self.get_total()
     
-
+    
     def add_item(self,item_pk):
         item, created = UserItem.objects.get_or_create(
         user_id =self.user_pk,product_id=item_pk
@@ -28,6 +31,7 @@ class CartView(UnicornView):
             item.save()
         self.user_items = UserItem.objects.filter(user=self.user_pk)
         self.get_total()
+        messages.success(self.request, "item added to cart")
         return redirect('/')
 
 
@@ -43,6 +47,7 @@ class CartView(UnicornView):
         item.delete()
         self.user_items = self.user_items.exclude(pk=item_pk)
         self.get_total()
+        messages.success(self.request, "item  removed from cart")
         return redirect('/')
 
 

@@ -18,6 +18,7 @@ class Items(models.Model):
 class NewsLetter(models.Model):
     email = models.EmailField(max_length=200)
 
+
 class UserItem(models.Model):
     product = models.ForeignKey(Items, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -30,3 +31,9 @@ class UserItem(models.Model):
 
     def __str__(self):
         return self.product.item_name
+
+class UserOrder(models.Model):
+    order_number = models.CharField(max_length=50)
+    items = models.ManyToManyField(UserItem)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+

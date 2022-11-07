@@ -1,17 +1,20 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from .forms import  RegisterForm, CustomAuthForm, NewsFieldForm
-from django.contrib.auth import login,logout,authenticate
+from django.contrib.auth import logout,authenticate
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView
 from django.views.generic import ListView,DetailView
 from django.contrib import messages
 from django.http  import JsonResponse
 from .models import Items
 import json
+from django.contrib.auth.decorators import login_required
 
 class CustomLoginView(LoginView):
     authentication_form =  CustomAuthForm
 # Create your views here.
+@login_required(login_url='/login')
 def index(request):
     items = Items.objects.all()
     form = NewsFieldForm(request.POST)
@@ -28,7 +31,7 @@ def signup(request):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request,user)
+            auth_login(request,user)
             return redirect('/home')
     else:
         form = RegisterForm()
@@ -39,7 +42,7 @@ def login(response):
         form = CustomAuthForm(response.POST)
         if form.is_valid():
             user = form.save()
-            login(response,user)
+            auth_login(response,user)
             messages.success(response,f'{user.first_name} has logged in!')
             return redirect('/home')
     else:
