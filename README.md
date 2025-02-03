@@ -8,7 +8,7 @@ Preview:
 
 ## Screenshots
 
-![App Screenshot](https://i.ibb.co/PCSs4T8/127-0-0-1-8000.png)
+![App Screenshot](https://i.ibb.co/gLdSZnhb/127-0-0-1-8000.png)
 
 ![App Screenshot](https://i.ibb.co/ZSxk73x/127-0-0-1-80001.png)
 
